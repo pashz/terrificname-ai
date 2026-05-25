@@ -543,7 +543,7 @@ function initSpeechRecognition() {
   }
   
   const rec = new SpeechRecognition();
-  rec.continuous = false;
+  rec.continuous = /Edge/.test(navigator.userAgent) ? true : false;;
   rec.interimResults = true;
   rec.lang = 'en-US';
   
