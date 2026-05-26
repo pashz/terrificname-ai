@@ -1,23 +1,42 @@
 # TerrificName AI — ElevenLabs Hack #10 Submission
 
-**Voice-powered domain recommendation agent.** Speak your business idea → AI searches 412 premium domains → hears the perfect match in ~2 seconds.
+**Voice-powered domain recommendation agent.** Speak your business idea → AI searches 412 premium domains → hear the perfect match in ~2 seconds.
 
-## What it does
-- User describes a business idea by voice (e.g., "I need a fintech startup domain")
-- ElevenLabs Speech Engine transcribes speech → sends to our FastAPI backend
-- Claude reasons over the full 412-domain portfolio and returns top 3 matches
-- ElevenLabs voices the recommendation back naturally with interruption support
+**Live Demo:** [https://terrificname-ai.onrender.com](https://terrificname-ai.onrender.com)
 
-## Tech stack
-- **Voice**: ElevenLabs Speech Engine (STT + TTS + turn-taking)
-- **Backend**: FastAPI + Python
-- **Reasoning**: Claude 3.5 Sonnet with full portfolio context
-- **Frontend**: Vanilla HTML/JS (no build step)
+**Video:** [YouTube Demo](YOUR_YOUTUBE_LINK_HERE)
 
-## Quick start
+---
+
+## What It Does
+
+1. **Tap the orb** and describe your business idea by voice (e.g., *"I need a fintech startup domain for crypto payments"*)
+2. **Web Speech API** transcribes your speech in the browser
+3. **FastAPI backend** sends your query + full 412-domain portfolio to Claude 3.5 Sonnet
+4. **Claude reasons** over categories, tags, and brandability to return the top 3 matches
+5. **ElevenLabs TTS** voices the recommendation back naturally through the browser
+
+## Demo
+
+[Insert GIF or screenshot of orb + conversation panel]
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Voice STT | Web Speech API (browser-native) |
+| Voice TTS | ElevenLabs API |
+| Backend | FastAPI (Python) |
+| AI Reasoning | Claude 3.5 Sonnet |
+| Frontend | Vanilla HTML / CSS / JS (no build step) |
+| Hosting | Render (free tier) |
+| Monitoring | UptimeRobot |
+
+## Quick Start
 
 ```bash
-# 1. Clone / unzip project
+# 1. Clone the repo
+git clone https://github.com/pashz/terrificname-ai.git
 cd terrificname-ai
 
 # 2. Install dependencies
@@ -30,46 +49,72 @@ cp .env.example .env
 #   ELEVENLABS_API_KEY=sk_...
 #   ELEVENLABS_VOICE_ID=21m00Tcm4TlvDq8ikWAM  # Rachel (default)
 
-# 4. Run server
+# 4. Run the server
 python server.py
 
-# 5. Open http://localhost:8000 in browser
+# 5. Open http://localhost:8000 in Chrome
 # Tap the orb → speak → hear domain recommendations
 ```
 
-## Project structure
+## Project Structure
+
 ```
 terrificname-ai/
-├── server.py              # FastAPI + Speech Engine WebSocket
-├── domain_engine.py       # Claude reasoning + 412-domain database
+├── server.py              # FastAPI server (/chat, /health, /docs)
+├── domain_engine.py       # Claude reasoning + domains.json loader
 ├── data/
-│   └── domains.json       # Full categorized portfolio
+│   └── domains.json       # 412 categorized premium domains
 ├── static/
-│   └── index.html         # Demo frontend
+│   └── index.html         # Voice-enabled frontend
 ├── requirements.txt
 └── README.md
 ```
 
-## Hackathon scoring checklist
-- [ ] Project submitted on ElevenHacks portal (Thu 28 May 17:00 UTC)
-- [ ] Cover image uploaded (1280×720, bold text, "wow" moment)
-- [ ] Repo URL linked (GitHub public repo)
-- [ ] Live demo URL linked (Render / Railway / Fly.io)
-- [ ] 60-90 second video uploaded (5-second hook, captions)
-- [ ] Social posts on X, LinkedIn, Instagram, TikTok (+200 pts)
+## API Endpoints
 
-## Keep Alive (Render Free Tier)
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/chat` | POST | Main query endpoint — send text, get AI response + TTS audio |
+| `/health` | GET | Health check for monitoring |
+| `/docs` | GET | Auto-generated Swagger/OpenAPI docs |
+| `/conversation-token` | GET | Token for conversation state |
 
-See [KEEP_ALIVE.md](KEEP_ALIVE.md) for the 1-line ping setup.
+## Deployment
 
-## Deployment (free tier)
-**Render**: Connect GitHub repo → auto-deploy on push → free tier sleeps after 15 min (fine for judging)
-**Railway**: $5 free credit → no sleep → better for demo day
-**Fly.io**: `fly launch` → free allowances
+### Render (Recommended — Free Tier)
+1. Connect your GitHub repo to Render
+2. Set environment variables in Render dashboard
+3. Auto-deploys on every push
+4. Note: Free tier spins down after 15 min inactivity (first request may take ~30s to wake)
 
-## Fallback mode
-If Speech Engine WebSocket has SDK issues, the frontend auto-switches to text mode:
-- User types business idea
+### Railway
+- $5 free credit, no sleep mode
+- Better for demo day traffic
+
+### Fly.io
+- `fly launch` → free allowances available
+
+## Browser Support
+
+- **Chrome**: Full voice support (Web Speech API)
+- **Edge/Opera/Safari**: Text mode fallback by design
+- **Mobile Chrome**: Supported
+
+## Fallback Mode
+
+If voice input fails or browser is unsupported, the frontend automatically switches to text mode:
+- Type your business idea
 - Backend returns Claude response via HTTP
 - Frontend auto-plays ElevenLabs TTS via REST API
-- Still a valid demo — judges care about functionality, not transport layer purity.
+
+## Keep Alive
+
+See [KEEP_ALIVE.md](KEEP_ALIVE.md) for the 1-line ping setup to prevent Render free tier spin-down.
+
+## License
+
+MIT License — see [LICENSE](LICENSE) file.
+
+---
+
+Built for [ElevenLabs Hack #10](https://elevenlabs.io/hackathon) — Speech Engine category.
