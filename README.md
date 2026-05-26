@@ -4,7 +4,7 @@
 
 **Live Demo:** [https://terrificname-ai.onrender.com](https://terrificname-ai.onrender.com)
 
-**Video:** [YouTube Demo](YOUR_YOUTUBE_LINK_HERE)
+**Video:** [YouTube Demo](https://youtu.be/StDLOrS7pkQ)
 
 ---
 
